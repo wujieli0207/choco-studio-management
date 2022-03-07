@@ -1,0 +1,14 @@
+@import "./variables.scss";
+
+body {
+  background: $--color-light-gray;
+}
+
+li {
+  list-style-type: none;
+}
+
+a {
+  color: $--color-black;
+  text-decoration: none;
+}
