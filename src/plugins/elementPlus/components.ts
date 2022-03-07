@@ -1,5 +1,5 @@
-import { ElButton } from "element-plus";
+import { ElButton, ElInput } from "element-plus";
 
-export const components = [ElButton];
+export const components = [ElButton, ElInput];
 
 export const plugins = [];
