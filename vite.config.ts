@@ -1,7 +1,7 @@
 import { ConfigEnv, UserConfigExport } from "vite";
 import vue from "@vitejs/plugin-vue";
 import { resolve } from "path";
-import { createStyleImportPlugin, ElementPlusResolve } from "vite-plugin-style-import";
+import { createStyleImportPlugin, AndDesignVueResolve } from "vite-plugin-style-import";
 import PurgeIcons from "vite-plugin-purge-icons";
 import { viteMockServe } from "vite-plugin-mock";
 
@@ -19,7 +19,7 @@ export default ({ command }: ConfigEnv): UserConfigExport => {
     plugins: [
       vue(),
       createStyleImportPlugin({
-        resolves: [ElementPlusResolve()],
+        resolves: [AndDesignVueResolve()],
       }),
       PurgeIcons(),
       viteMockServe({
@@ -47,6 +47,13 @@ export default ({ command }: ConfigEnv): UserConfigExport => {
           rewrite: (path) => {
             return path.replace(/^\/api/, "");
           }, // 重写传过来的path路径，比如 `/api/index/1?id=10&name=zs`（注意:path路径最前面有斜杠（/），因此，正则匹配的时候不要忘了是斜杠（/）开头的；选项的 key 也是斜杠（/）开头的）
+        },
+      },
+    },
+    css: {
+      preprocessorOptions: {
+        less: {
+          javascriptEnabled: true,
         },
       },
     },

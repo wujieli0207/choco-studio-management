@@ -1,7 +1,7 @@
 import { App, Component } from "vue";
 import { components, plugins } from "./components";
 
-function useElementPlus(app: App) {
+function useAntdVue(app: App) {
   components.forEach((component: Component) => {
     if (component.name) {
       app.component(component.name, component);
@@ -12,6 +12,6 @@ function useElementPlus(app: App) {
   });
 }
 
-export default function setupElementPlus(app: App<Element>) {
-  app.use(useElementPlus);
+export default function setupAntdVue(app: App<Element>) {
+  app.use(useAntdVue);
 }
