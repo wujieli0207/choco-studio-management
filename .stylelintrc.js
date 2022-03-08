@@ -1,6 +1,6 @@
 module.exports = {
   root: true,
-  plugins: ["stylelint-scss", "stylelint-order"],
+  plugins: ["stylelint-less", "stylelint-order"],
   extends: [
     "stylelint-config-standard",
     "stylelint-config-recess-order",

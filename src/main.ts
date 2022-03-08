@@ -1,4 +1,4 @@
-import "/@/styles/index.scss";
+import "/@/styles/index.less";
 import { createApp } from "vue";
 import App from "./App.vue";
 import setupAntdVue from "./plugins/antdVue";
