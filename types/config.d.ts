@@ -1,3 +1,5 @@
+import { CacheTypeEnum } from "/@/enums/cacheEnum";
+
 export interface AppointConfig {
   startTimeHour: string; // 课程预约开始小时
   endTimeHour: string; // 课程预约结束小时
@@ -18,4 +20,8 @@ export interface GlobEnvConfig {
   VITE_GLOB_API_URL: string;
   VITE_GLOB_API_URL_PREFIX?: string;
   VITE_GLOB_UPLOAD_URL?: string;
+}
+
+export interface ProjectConfig {
+  permissionCacheType: CacheTypeEnum;
 }

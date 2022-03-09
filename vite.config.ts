@@ -4,6 +4,7 @@ import { resolve } from "path";
 import { createStyleImportPlugin, AndDesignVueResolve } from "vite-plugin-style-import";
 import PurgeIcons from "vite-plugin-purge-icons";
 import { viteMockServe } from "vite-plugin-mock";
+import vueJsx from "@vitejs/plugin-vue-jsx";
 
 const pathResolve = (dir: string): any => {
   return resolve(__dirname, ".", dir);
@@ -18,6 +19,7 @@ export default ({ command }: ConfigEnv): UserConfigExport => {
   return {
     plugins: [
       vue(),
+      vueJsx(),
       createStyleImportPlugin({
         resolves: [AndDesignVueResolve()],
       }),
