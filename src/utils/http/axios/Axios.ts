@@ -103,7 +103,7 @@ export class ChocoAxios {
 
     // 响应拦截器
     this.axiosInstance.interceptors.response.use((res: AxiosResponse<any>) => {
-      res && axiosCanceler.removeAllPending(res.config);
+      res && axiosCanceler.removePending(res.config);
 
       if (responseInterceptors && isFunction(responseInterceptors)) {
         res = responseInterceptors(res);
