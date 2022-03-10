@@ -19,7 +19,6 @@ export function useFormValid<T extends Object = any>(formRef: Ref<any>) {
     }
 
     const data = await form.validate();
-    console.log("data: ", data);
     return data as T;
   }
 
@@ -42,7 +41,7 @@ export function useFormRules(loginInfo?: Recordable) {
       // login form rule
       default:
         return {
-          account: accountFormRule,
+          userName: accountFormRule,
           password: passwordFormRule,
         };
     }
@@ -54,7 +53,7 @@ export function useFormRules(loginInfo?: Recordable) {
 function createRule(message: string) {
   return [
     {
-      resuired: true,
+      required: true,
       message,
       trigger: "change",
     },

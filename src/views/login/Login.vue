@@ -9,13 +9,13 @@
         :rules="getFormRules"
         @keypress.enter="handleLogin"
       >
-        <a-form-item>
+        <a-form-item name="userName">
           <a-input
             class="login-page__item"
             v-model:value="loginInfo.userName"
             placeholder="请输入用户名"
         /></a-form-item>
-        <a-form-item>
+        <a-form-item name="password">
           <a-input
             class="login-page__item"
             v-model:value="loginInfo.password"
@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { onMounted, reactive, ref } from "vue";
+  import { reactive, ref } from "vue";
   import { useFormRules, useFormValid } from "./hooks/useLogin";
   import { useMessage } from "/@/hooks/useMessage";
   import { useUserStore } from "/@/store/modules/user";
@@ -41,17 +41,13 @@
   const { notification, createErrorModal } = useMessage();
   const { getFormRules } = useFormRules();
 
-  onMounted(() => {
-    // console.log("getFormRules: ", getFormRules.value);
-  });
-
   const formRef = ref();
   const loading = ref(false);
 
   const title = import.meta.env.VITE_GLOB_APP_TITLE;
   const loginInfo = reactive({
-    userName: "wujieli",
-    password: "123456",
+    userName: "",
+    password: "",
   });
 
   const { validForm } = useFormValid(formRef);
@@ -66,8 +62,8 @@
       loading.value = true;
       // ! TODO 校验存在问题待调试，暂时跳过校验
       const userInfo = await userStore.login({
-        userName: loginInfo.userName,
-        password: loginInfo.password,
+        userName: data.userName,
+        password: data.password,
         mode: "none",
       });
       if (userInfo) {
