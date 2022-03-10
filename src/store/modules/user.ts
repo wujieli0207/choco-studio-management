@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { h } from "vue";
+import { store } from "/@/store";
 import { ErrorMessageMode } from "/#/axios";
 import { UserInfo } from "/#/store";
 import { GetUserInfoModel, LoginParams } from "/@/api/model/userModel";
@@ -57,7 +58,7 @@ export const useUserStore = defineStore({
       this.roleList = roleList;
       setAuthCache(ROLES_KEY, roleList);
     },
-    setSessiontTimeout(flag: boolean) {
+    setSessionTimeout(flag: boolean) {
       this.sessionTimeout = flag;
     },
     resetState() {
@@ -143,3 +144,7 @@ export const useUserStore = defineStore({
     },
   },
 });
+
+export function useUserStoreWithOut() {
+  return useUserStore(store);
+}
