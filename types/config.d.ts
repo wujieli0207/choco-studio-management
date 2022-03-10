@@ -1,3 +1,4 @@
+import { SessionTimeoutProcessingEnum } from "/@/enums/appEnum";
 import { CacheTypeEnum } from "/@/enums/cacheEnum";
 
 export interface AppointConfig {
@@ -24,4 +25,8 @@ export interface GlobEnvConfig {
 
 export interface ProjectConfig {
   permissionCacheType: CacheTypeEnum;
+  // 是否使用错误处理
+  useErrorHandle: boolean;
+  // session 过期的处理方式
+  sessionTimeoutProcessing: SessionTimeoutProcessingEnum;
 }

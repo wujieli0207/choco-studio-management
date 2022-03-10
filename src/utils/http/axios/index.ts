@@ -8,9 +8,14 @@ import { RequestOptions, Result } from "/#/axios";
 import { useGlobSetting } from "/@/settings";
 import { isString } from "/@/utils/is";
 import { formatRequestDate, joinTimestamp } from "./helper";
+import { getToken } from "/@/utils/auth";
+import { useErrorLogStoreWithOut } from "/@/store/modules/errorLog";
+import { useMessage } from "/@/hooks/useMessage";
+import { checkStatus } from "./checkStatus";
 
 const globSetting = useGlobSetting();
 const urlPrefix = globSetting.urlPrefix;
+const { createMessage, createErrorModal } = useMessage();
 
 const transform: AxiosTransform = {
   /**
@@ -54,7 +59,13 @@ const transform: AxiosTransform = {
         }
     }
 
-    // TODO 错误请求弹窗部分待添加
+    // modal 用于重要消息提示，none 用于调用时不希望自动弹出错误提示
+    if (options.errorMessageMode === "modal") {
+      createErrorModal({ title: "错误提示", content: timeoutMsg });
+    }
+    if (options.errorMessageMode === "message") {
+      createMessage.error(timeoutMsg);
+    }
 
     throw new Error(timeoutMsg || "请求出错，请稍后重试");
   },
@@ -117,8 +128,68 @@ const transform: AxiosTransform = {
     return config;
   },
 
-  // ! TODO 请求携带 Token 功能待添加
-  // ! TODO 响应失败处理函数待添加
+  /**
+   *
+   * @param config
+   * @param options
+   * @description 请求拦截器处理
+   */
+  requestInterceptors: (config, options) => {
+    const token = getToken();
+    if (token && (config as Recordable)?.requestOptions?.withToken !== false) {
+      (config as Recordable).headers.Authorization = options.authenticationScheme
+        ? `${options.authenticationScheme} ${token}`
+        : token;
+    }
+    console.log("config: ", config);
+    return config;
+  },
+
+  /**
+   *
+   * @returns 响应拦截器
+   */
+  responseInterceptors: (res: AxiosResponse<any>) => {
+    return res;
+  },
+
+  /**
+   *
+   * @description 响应错误处理
+   */
+  responseInterceptorsCatch: (error: any) => {
+    const errorLogStore = useErrorLogStoreWithOut();
+    errorLogStore.addAjaxErrorInfo(error);
+    const { response, code, message, config } = error || {};
+    const errorMessageMode = config?.requestOptions?.errorMessageMode || "none";
+    const msg: string = response?.data?.error?.message ?? "";
+    const err: string = error?.toString?.() ?? "";
+    let errMessage = "";
+
+    try {
+      if (code === "ECONNABORTED" && message.indexOf("timeout") !== -1) {
+        errMessage = "接口请求超时，请刷新页面重试！";
+      }
+      if (err?.includes("Network Error")) {
+        errMessage = "网络异常，请检查您的网络连接是否正常！";
+      }
+
+      if (errMessage) {
+        if (errorMessageMode === "modal") {
+          createErrorModal({ title: "错误提示", content: errMessage });
+        }
+        if (errorMessageMode === "message") {
+          createMessage.error(errMessage);
+        }
+        return Promise.reject(error);
+      }
+    } catch (error) {
+      throw new Error(error as unknown as string);
+    }
+
+    checkStatus(error?.response?.status, msg, errorMessageMode);
+    return Promise.reject(error);
+  },
 };
 
 function createAxios(opt?: Partial<CreateAxiosOptions>) {
@@ -152,8 +223,8 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
           errorMessageMode: "message",
           // 默认加入时间戳
           joinTime: true,
-          // TODO 暂时不携带携带 Token
-          withToken: false,
+          // 默认请求携带 Token
+          withToken: true,
         },
       },
       opt || {}

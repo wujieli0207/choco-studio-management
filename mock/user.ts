@@ -55,8 +55,6 @@ export default [
     method: "get",
     response: (request: requestParams) => {
       const token = getRequestToken(request);
-      // TODO token 获取问题待处理
-      // const token = "fakeToken1";
       if (!token) {
         return resultError("Token 不存在");
       }
