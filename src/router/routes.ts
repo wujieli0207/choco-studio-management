@@ -2,7 +2,7 @@ import type { AppRouteRecordRaw } from "./types";
 
 const routes: AppRouteRecordRaw[] = [
   {
-    path: "/",
+    path: "/home",
     name: "home",
     component: () => import("/@/views/home/Home.vue"),
     meta: {
@@ -10,7 +10,7 @@ const routes: AppRouteRecordRaw[] = [
     },
   },
   {
-    path: "/login",
+    path: "/",
     name: "login",
     component: () => import("/@/views/login/Login.vue"),
     meta: {

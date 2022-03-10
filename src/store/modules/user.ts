@@ -9,6 +9,7 @@ import { ROLES_KEY, TOKEN_KEY, USER_INFO_KEY } from "/@/enums/cacheEnum";
 import { RoleEnum } from "/@/enums/roleEnum";
 import { useMessage } from "/@/hooks/useMessage";
 import { getAuthCache, setAuthCache } from "/@/utils/auth";
+import { router } from "/@/router";
 
 interface UserState {
   userInfo: Nullable<UserInfo>;
@@ -94,9 +95,12 @@ export const useUserStore = defineStore({
 
       const sessiontTimeout = this.sessionTimeout;
       if (sessiontTimeout) {
-        this.setSessiontTimeout(false);
+        this.setSessionTimeout(false);
       } else {
-        // ! TODO 权限及路由待处理
+        // ! TODO 权限及路由待处理，目前只是默认跳转登录页面
+        router.push({
+          name: "home",
+        });
       }
 
       return userInfo;
