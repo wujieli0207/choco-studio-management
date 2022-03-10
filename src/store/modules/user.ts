@@ -73,7 +73,6 @@ export const useUserStore = defineStore({
       }
     ): Promise<GetUserInfoModel | null> {
       try {
-        console.log("params: ", params);
         const { goHome = true, mode, ...loginParams } = params;
 
         const data = await loginApi(loginParams, mode);
