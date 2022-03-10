@@ -25,7 +25,7 @@ export function useFormValid<T extends Object = any>(formRef: Ref<any>) {
   return { validForm };
 }
 
-export function useFormRules(loginInfo?: Recordable) {
+export function useFormRules(_loginInfo?: Recordable) {
   const getAccountFormRule = computed(() => {
     return createRule("请输入账号");
   });

@@ -10,6 +10,7 @@ import { RoleEnum } from "/@/enums/roleEnum";
 import { useMessage } from "/@/hooks/useMessage";
 import { getAuthCache, setAuthCache } from "/@/utils/auth";
 import { router } from "/@/router";
+import { PageEnum } from "/@/enums/pageEnum";
 
 interface UserState {
   userInfo: Nullable<UserInfo>;
@@ -52,7 +53,7 @@ export const useUserStore = defineStore({
       setAuthCache(USER_INFO_KEY, userInfo);
     },
     setToken(token: string | undefined) {
-      this.token = token ? token : "";
+      this.token = token || "";
       setAuthCache(TOKEN_KEY, token);
     },
     setRoleList(roleList: RoleEnum[]) {
@@ -69,24 +70,24 @@ export const useUserStore = defineStore({
     },
     async login(
       params: LoginParams & {
-        goHome?: boolean;
+        _goHome?: boolean;
         mode?: ErrorMessageMode;
       }
     ): Promise<GetUserInfoModel | null> {
       try {
-        const { goHome = true, mode, ...loginParams } = params;
+        const { _goHome = true, mode, ...loginParams } = params;
 
         const data = await loginApi(loginParams, mode);
         const { token } = data;
 
         this.setToken(token);
 
-        return this.afterLoginAction(goHome);
+        return this.afterLoginAction();
       } catch (error) {
         return Promise.reject(error);
       }
     },
-    async afterLoginAction(goHome?: boolean): Promise<GetUserInfoModel | null> {
+    async afterLoginAction(_goHome?: boolean): Promise<GetUserInfoModel | null> {
       if (!this.getToken) {
         return null;
       }
@@ -132,6 +133,10 @@ export const useUserStore = defineStore({
         } catch (error) {
           console.log(error, "注销 TOKEN 失败");
         }
+        this.setToken(undefined);
+        this.setSessionTimeout(false);
+        this.setUserInfo(null);
+        goLogin && router.push(PageEnum.BASE_LOGIN);
       }
     },
     confirmLoginOut() {

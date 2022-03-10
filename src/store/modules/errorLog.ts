@@ -1,4 +1,3 @@
-import { fi } from "element-plus/lib/locale";
 import { defineStore } from "pinia";
 import { store } from "/@/store";
 import { ErrorLogInfo } from "/#/store";

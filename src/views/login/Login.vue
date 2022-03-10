@@ -11,14 +11,14 @@
       >
         <a-form-item name="userName">
           <a-input
-            class="login-page__item"
             v-model:value="loginInfo.userName"
+            class="login-page__item"
             placeholder="请输入用户名"
         /></a-form-item>
         <a-form-item name="password">
           <a-input
-            class="login-page__item"
             v-model:value="loginInfo.password"
+            class="login-page__item"
             placeholder="请输入密码"
             type="password"
             show-password
