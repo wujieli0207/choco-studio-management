@@ -1,5 +1,41 @@
-import { Button, Form, FormItem, Input } from "ant-design-vue";
+import {
+  Avatar,
+  Breadcrumb,
+  Button,
+  Dropdown,
+  Form,
+  FormItem,
+  Input,
+  Layout,
+  LayoutContent,
+  LayoutFooter,
+  LayoutHeader,
+  LayoutSider,
+  Menu,
+  MenuDivider,
+  MenuItem,
+  SubMenu,
+  Tooltip,
+} from "ant-design-vue";
 
-export const components = [Button, Form, FormItem, Input];
+export const components = [
+  Button,
+  Form,
+  FormItem,
+  Input,
+  Layout,
+  LayoutSider,
+  LayoutHeader,
+  LayoutContent,
+  Menu,
+  MenuItem,
+  MenuDivider,
+  SubMenu,
+  Breadcrumb,
+  LayoutFooter,
+  Avatar,
+  Dropdown,
+  Tooltip,
+];
 
 export const plugins = [];

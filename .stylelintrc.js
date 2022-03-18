@@ -11,6 +11,12 @@ module.exports = {
     "no-descending-specificity": null,
     // 禁止使用未知的伪元素选择器
     "selector-pseudo-element-no-unknown": null,
+    "at-rule-no-unknown": [
+      true,
+      {
+        ignoreAtRules: ["tailwind"],
+      },
+    ],
   },
   ignoreFiles: ["**/*.js", "**/*.jsx", "**/*.tsx", "**/*.ts"],
 };

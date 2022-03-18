@@ -2,13 +2,7 @@
   <div class="login-page">
     <div class="login-page__wrapper">
       <h2 class="login-page__title">{{ title }}</h2>
-      <a-form
-        ref="formRef"
-        :model="loginInfo"
-        class="flex flex-col"
-        :rules="getFormRules"
-        @keypress.enter="handleLogin"
-      >
+      <a-form ref="formRef" :model="loginInfo" :rules="getFormRules" @keypress.enter="handleLogin">
         <a-form-item name="userName">
           <a-input
             v-model:value="loginInfo.userName"
@@ -60,7 +54,6 @@
 
     try {
       loading.value = true;
-      // ! TODO 校验存在问题待调试，暂时跳过校验
       const userInfo = await userStore.login({
         userName: data.userName,
         password: data.password,

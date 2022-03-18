@@ -1,4 +1,4 @@
-import { RouteRecordRaw } from "vue-router";
+import { RouteRecordRaw, RouteMeta } from "vue-router";
 import { defineComponent } from "vue";
 
 export type Component<T = any> =
@@ -6,13 +6,11 @@ export type Component<T = any> =
   | (() => Promise<typeof import("*.vue")>)
   | (() => Promise<T>);
 
-interface AppRouteMeta {
-  title: string;
-}
-
-export interface AppRouteRecordRaw extends Omit<RouteRecordRaw, "meta"> {
+export interface AppRouteRecordRaw extends Omit<RouteRecordRaw, "children"> {
   path: string;
   name: string;
-  component: Component;
-  meta: AppRouteMeta;
+  meta: RouteMeta;
+  component?: Component;
+  children?: AppRouteRecordRaw[];
+  props?: Recordable;
 }
