@@ -1,6 +1,6 @@
 <template>
   <a-layout-header class="bg-slate-900">
-    <div class="flex flex-row justify-between items-center my-4">
+    <div class="flex flex-row justify-between items-center">
       <!-- TODO 折叠侧边栏按钮样式待调整 -->
       <div class="flex flex-row">
         <a-button type="primary" @click="handleCollapse">
