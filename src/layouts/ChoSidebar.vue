@@ -47,7 +47,6 @@
   import { useAppStore } from "/@/store/modules/app";
   import { useGo } from "/@/hooks/web/usePage";
   import { SideBarItem } from "./types";
-  import { MenuInfo } from "ant-design-vue/lib/menu/src/interface";
 
   const appStore = useAppStore();
   const go = useGo();
@@ -114,7 +113,7 @@
   /**
    * @description 点击左侧菜单跳转页面
    */
-  function handleMenuClick(payload: MenuInfo) {
-    go(payload.key as string);
+  function handleMenuClick({ key }: { key: string }) {
+    go(key);
   }
 </script>

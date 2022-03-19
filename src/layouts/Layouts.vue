@@ -3,7 +3,7 @@
     <cho-header />
     <a-layout>
       <cho-sidebar />
-      <a-layout-content
+      <a-layout-content class="m-3"
         ><router-view>
           <template #default="{ Component }">
             <transition>
