@@ -2,6 +2,7 @@ import {
   Avatar,
   Breadcrumb,
   Button,
+  Card,
   Dropdown,
   Form,
   FormItem,
@@ -15,6 +16,7 @@ import {
   MenuDivider,
   MenuItem,
   SubMenu,
+  Table,
   Tooltip,
 } from "ant-design-vue";
 
@@ -36,6 +38,8 @@ export const components = [
   Avatar,
   Dropdown,
   Tooltip,
+  Card,
+  Table,
 ];
 
 export const plugins = [];
