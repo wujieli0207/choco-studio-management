@@ -1,5 +1,3 @@
-import { App, Plugin } from "vue";
-
 const toString = Object.prototype.toString;
 
 export function is(val: unknown, type: string) {
@@ -74,15 +72,4 @@ export function isUrl(path: string): boolean {
   const reg =
     /(((^https?:(?:\/\/)?)(?:[-;:&=+$,\w]+@)?[A-Za-z0-9.-]+(?::\d+)?|(?:www.|[-;:&=+$,\w]+@)[A-Za-z0-9.-]+)((?:\/[+~%/.\w-_]*)?\??(?:[-+=&;%@.\w_]*)#?(?:[\w]*))?)$/;
   return reg.test(path);
-}
-
-export function withInstall<T>(component: T, alias?: string) {
-  const comp = component as any;
-  comp.install = (app: App) => {
-    app.component(comp.name || comp.displayName, component);
-    if (alias) {
-      app.config.globalProperties[alias] = component;
-    }
-  };
-  return component as T & Plugin;
 }

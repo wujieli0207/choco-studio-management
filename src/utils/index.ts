@@ -1,3 +1,4 @@
+import { App } from "vue";
 import { isObject } from "/@/utils/is";
 
 export function setObjToUrlParams(baseUrl: string, obj: any): string {
@@ -17,4 +18,15 @@ export function deepMerge<T = any>(src: any = {}, target: any = {}): T {
     src[key] = isObject(src[key]) ? deepMerge(src[key], target[key]) : (src[key] = target[key]);
   }
   return src;
+}
+
+export function withInstall<T>(component: T, alias?: string) {
+  const comp = component as any;
+  comp.install = (app: App) => {
+    app.component(comp.name || comp.displayName, component);
+    if (alias) {
+      app.config.globalProperties[alias] = component;
+    }
+  };
+  return component as T & Plugin;
 }
