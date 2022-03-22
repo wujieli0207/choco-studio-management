@@ -1,11 +1,14 @@
 import {
   Avatar,
+  Badge,
   Breadcrumb,
   Button,
   Card,
   Dropdown,
   Form,
   FormItem,
+  Image,
+  ImagePreviewGroup,
   Input,
   Layout,
   LayoutContent,
@@ -15,6 +18,7 @@ import {
   Menu,
   MenuDivider,
   MenuItem,
+  Popconfirm,
   SubMenu,
   Table,
   Tooltip,
@@ -40,6 +44,10 @@ export const components = [
   Tooltip,
   Card,
   Table,
+  Image,
+  ImagePreviewGroup,
+  Badge,
+  Popconfirm,
 ];
 
 export const plugins = [];

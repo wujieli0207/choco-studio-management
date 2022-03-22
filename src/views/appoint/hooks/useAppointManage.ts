@@ -1,22 +1,25 @@
+import { BasicColumn } from "/@/components/ChoTable/src/types/table";
 import { Ref, ref, onMounted } from "vue";
 import { AppointManageTableItem } from "../types";
 import { getAppointList } from "/@/api/appoint";
 
 const useAppointManage = () => {
-  const columns = [
+  const columns: BasicColumn[] = [
     {
       title: "序号",
       dataIndex: "appointId",
-      width: "10%",
+      width: 100,
     },
     {
       title: "预约标题",
       dataIndex: "appointTitle",
-      width: "30%",
+      width: 100,
     },
     {
       title: "预约图片",
       dataIndex: "appointImg",
+      width: 100,
+      slots: { customRender: "img" },
     },
     {
       title: "金额",
@@ -49,7 +52,6 @@ const useAppointManage = () => {
   async function loadAppointList() {
     const result = await getAppointList();
     data.value = result.list;
-    console.log("data.value: ", data.value);
   }
 
   return { columns, data };

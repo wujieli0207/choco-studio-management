@@ -1,7 +1,7 @@
 <template>
   <!-- TODO 侧边栏内容动态配置 -->
   <a-layout-sider v-model:collapsed="collapsed" collapsible :trigger="null">
-    <a-menu theme="dark" mode="inline" :on-click="handleMenuClick">
+    <a-menu theme="dark" mode="inline" :onClick="handleMenuClick">
       <template v-for="item in sideBarItem" :key="item.index">
         <!-- 支持一级菜单栏 -->
         <template v-if="!item.subs">

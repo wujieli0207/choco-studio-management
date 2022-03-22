@@ -77,7 +77,7 @@
 </script>
 
 <style scoped lang="less">
-  @import "/@/styles/variables.less";
+  @import "/@/styles/color.less";
 
   @property --perA {
     syntax: "<percentage>";
