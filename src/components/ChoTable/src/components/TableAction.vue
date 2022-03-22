@@ -10,13 +10,13 @@
       />
     </template>
     <Dropdown
+      v-if="dropDownActions && getDropdownList.length > 0"
       :trigger="['hover']"
       :drop-menu-list="getDropdownList"
       :popconfirm="true"
-      v-if="dropDownActions && getDropdownList.length > 0"
     >
       <slot name="more" />
-      <a-button type="link" size="small" v-if="!$slots.more">
+      <a-button v-if="!$slots.more" type="link" size="small">
         <MoreOutlined class="icon-more" />
       </a-button>
     </Dropdown>
