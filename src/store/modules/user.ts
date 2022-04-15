@@ -98,7 +98,7 @@ export const useUserStore = defineStore({
       } else {
         // ! TODO 权限及路由待处理，目前只是默认跳转登录页面
         router.push({
-          name: "Home",
+          name: "home",
         });
       }
 

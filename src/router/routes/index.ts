@@ -10,12 +10,22 @@ export const LoginRoute: RouteRecordRaw = {
 };
 
 export const HomeRoute: RouteRecordRaw = {
-  path: "/home",
-  name: "Home",
-  component: () => import("/@/views/Home.vue"),
+  path: "/layout",
+  name: "layout",
+  component: () => import("/@/layouts/default/index.vue"),
   meta: {
-    title: "登录",
+    title: "主页",
   },
+  children: [
+    {
+      path: "/home",
+      name: "home",
+      component: () => import("/@/views/Home.vue"),
+      meta: {
+        title: "home",
+      },
+    },
+  ],
 };
 
 export const basicRoutes = [LoginRoute, HomeRoute];
