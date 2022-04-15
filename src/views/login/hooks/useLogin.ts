@@ -36,7 +36,7 @@ export function useFormRules(_loginInfo?: Recordable) {
       // login form rule
       default:
         return {
-          username: accountFormRule,
+          userName: accountFormRule,
           password: passwordFormRule,
         };
     }

@@ -4,9 +4,9 @@
       <h2 class="login-page__title">{{ title }}</h2>
       {{ getFormRules }}
       <el-form ref="formRef" :model="loginInfo" :rules="getFormRules">
-        <el-form-item prop="username">
+        <el-form-item prop="userName">
           <el-input
-            v-model:value="loginInfo.username"
+            v-model:value="loginInfo.userName"
             class="login-page__item"
             placeholder="请输入用户名"
           />
@@ -47,7 +47,7 @@ const loading = ref(false);
 
 const title = import.meta.env.VITE_GLOB_APP_TITLE;
 const loginInfo = reactive({
-  username: "wujieli",
+  userName: "wujieli",
   password: "123456",
 });
 
