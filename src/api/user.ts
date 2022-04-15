@@ -29,7 +29,7 @@ export const loginApi = (
  *
  * @description 获取用户信息
  */
-export const getUserInfo = () => {
+export const getUserInfoApi = () => {
   return defHttp.get<GetUserInfoModel>(
     { url: Api.GET_USER_INFO },
     { errorMessageMode: "none" }

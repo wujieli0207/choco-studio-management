@@ -1,12 +1,13 @@
+import { loginApi, getUserInfoApi } from "/@/api/user";
 import { defineStore } from "pinia";
-import { Ref, ref } from "vue";
 import { ErrorMessageMode } from "/#/axios";
 import { UserInfo } from "/#/store";
-import { LoginParams } from "/@/api/model/userModel";
+import { GetUserInfoModel, LoginParams } from "/@/api/model/userModel";
 import { ROLES_KEY, TOKEN_KEY, USER_INFO_KEY } from "/@/enums/cacheEnum";
 import { RoleEnum } from "/@/enums/roleEnum";
 import { store } from "/@/store";
 import { getAuthCache, setAuthCache } from "/@/utils/auth";
+import { router } from "/@/router";
 
 interface UserState {
   userInfo: Nullable<UserInfo>;
@@ -67,42 +68,63 @@ export const useUserStore = defineStore({
       this.sessionTimeout = false;
     },
     async login(
-      params: LoginParams & { goHome: boolean; mode?: ErrorMessageMode }
-    ) {},
+      params: LoginParams & { _goHome?: boolean; mode?: ErrorMessageMode }
+    ) {
+      try {
+        console.log("params: ", params);
+        const { _goHome = true, mode, ...loginParams } = params;
+        const data = await loginApi(loginParams, mode);
+
+        const { token } = data;
+        this.setToken(token);
+
+        return this.afterLoginAction();
+      } catch (error) {
+        return Promise.reject(error);
+      }
+    },
+    async afterLoginAction(
+      _goHome?: boolean
+    ): Promise<GetUserInfoModel | null> {
+      if (!this.token) return null;
+
+      const userInfo = await this.getUserInfoAction();
+
+      const sessiontTimeout = this.sessionTimeout;
+      console.log("sessiontTimeout: ", sessiontTimeout);
+
+      if (sessiontTimeout) {
+        this.setSessionTimeout(false);
+      } else {
+        // ! TODO 权限及路由待处理，目前只是默认跳转登录页面
+        router.push({
+          name: "Home",
+        });
+      }
+
+      return userInfo;
+    },
+    async getUserInfoAction(): Promise<UserInfo | null> {
+      if (!this.token) return null;
+
+      const userInfo = await getUserInfoApi();
+
+      const { roles = [] } = userInfo;
+      if (Array.isArray(roles)) {
+        const roleList = roles.map((item) => item.value) as RoleEnum[];
+        this.setRoleList(roleList);
+      } else {
+        userInfo.roles = [];
+        this.setRoleList([]);
+      }
+
+      this.setUserInfo(userInfo);
+
+      return userInfo;
+    },
     async logout(goLogin = false) {},
   },
 });
-
-// export const useUserStore = defineStore("user", () => {
-//   const userInfo: Nullable<UserInfo> = null;
-//   let sessionTimeout = false;
-
-//   function getUserInfo(): Nullable<UserInfo> {
-//     return userInfo;
-//   }
-
-//   function getSessionTimeout(): boolean {
-//     return sessionTimeout;
-//   }
-
-//   function setSessionTimeout(flag: boolean): void {
-//     sessionTimeout = flag;
-//   }
-
-//   async function login(params: LoginParams & { goHome: boolean }) {
-//     const { ...loginParams, goHome = true } = params;
-//   }
-
-//   // ! TODO 登出功能未实现
-//   async function logout(goLogin = false) {}
-
-//   return {
-//     getUserInfo,
-//     getSessionTimeout,
-//     login,
-//     logout,
-//   };
-// });
 
 export function useUserStoreWithOut() {
   return useUserStore(store);

@@ -2,7 +2,6 @@
   <div class="login-page">
     <div class="login-page__wrapper">
       <h2 class="login-page__title">{{ title }}</h2>
-      {{ getFormRules }}
       <el-form ref="formRef" :model="loginInfo" :rules="getFormRules">
         <el-form-item prop="userName">
           <el-input
@@ -61,12 +60,15 @@ async function handleLogin() {
 
   try {
     loading.value = true;
+
     const userInfo = await userStore.login({
-      userName: data.userName,
-      password: data.password,
+      userName: loginInfo.userName,
+      password: loginInfo.password,
       mode: "none",
     });
-  }
+
+    console.log("userInfo: ", userInfo);
+  } catch {}
 
   // try {
   //   loading.value = true;
