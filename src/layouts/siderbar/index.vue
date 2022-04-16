@@ -8,7 +8,12 @@
     <div v-if="!getCollapsed">{{ title }}</div>
   </div>
   <!-- TODO 侧边栏暂时不是动态生成的 -->
-  <el-menu class="h-screen" :router="true" :collapse="getCollapsed">
+  <el-menu
+    class="h-screen"
+    :router="true"
+    default-active="/home"
+    :collapse="getCollapsed"
+  >
     <el-menu-item index="/home">
       <el-icon><home-filled /></el-icon>
       <template #title>
