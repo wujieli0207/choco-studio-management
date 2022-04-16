@@ -1,10 +1,22 @@
 <template>
-  <mark-down
-    ref="markDownRef"
-    v-model:value="markdownValue"
-    @change="handleChange"
-    placeholder="请输入 Markdown 文本"
-  />
+  <el-card>
+    <el-row :gutter="24">
+      <el-col :span="6">
+        <el-input placeholder="请输入标题..." />
+      </el-col>
+      <el-col :span="6">
+        <el-button type="primary">提交</el-button>
+      </el-col>
+    </el-row>
+    <div class="mt-4">
+      <mark-down
+        ref="markDownRef"
+        v-model:value="markdownValue"
+        @change="handleChange"
+        placeholder="请输入 Markdown 文本"
+      />
+    </div>
+  </el-card>
 </template>
 
 <script lang="ts" setup>
