@@ -1,7 +1,7 @@
 import { getConfigFileName } from "../../build/getConfigFileName";
-import pkg from "../../package.json";
-import { warn } from "./log";
+import { warn } from "/@/utils/log";
 import { GlobEnvConfig } from "/#/config";
+import pkg from "../../package.json";
 
 export function getAppEnvConfig() {
   const ENV_NAME = getConfigFileName(import.meta.env);

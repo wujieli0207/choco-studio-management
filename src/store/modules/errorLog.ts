@@ -12,7 +12,7 @@ export interface ErrorLogState {
 }
 
 export const useErrorLogStore = defineStore({
-  id: "errorLog",
+  id: "error-log",
   state: (): ErrorLogState => ({
     errorLogInfoList: null,
     errorLogListCount: 0,
@@ -46,12 +46,7 @@ export const useErrorLogStore = defineStore({
       };
       if (error.response) {
         const {
-          config: {
-            url = "",
-            data: params = "",
-            method = RequestEnum.GET,
-            headers = {},
-          } = {},
+          config: { url = "", data: params = "", method = RequestEnum.GET, headers = {} } = {},
           data = {},
         } = error.response;
         errInfo.url = url;

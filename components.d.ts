@@ -4,9 +4,13 @@
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    BasicButton: typeof import('./src/components/ChoButton/src/BasicButton.vue')['default']
+    BasicTable: typeof import('./src/components/ChoTable/src/BasicTable.vue')['default']
+    Dropdown: typeof import('./src/components/ChoDropdown/src/Dropdown.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElButton: typeof import('element-plus/es')['ElButton']
+    ElCard: typeof import('element-plus/es')['ElCard']
     ElCol: typeof import('element-plus/es')['ElCol']
     ElContainer: typeof import('element-plus/es')['ElContainer']
     ElDivider: typeof import('element-plus/es')['ElDivider']
@@ -25,9 +29,19 @@ declare module '@vue/runtime-core' {
     ElPageHeader: typeof import('element-plus/es')['ElPageHeader']
     ElRow: typeof import('element-plus/es')['ElRow']
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
+    ElTable: typeof import('element-plus/es')['ElTable']
+    ElTablPane: typeof import('element-plus/es')['ElTablPane']
+    ElTabPane: typeof import('element-plus/es')['ElTabPane']
+    ElTabs: typeof import('element-plus/es')['ElTabs']
+    HeaderCell: typeof import('./src/components/ChoTable/src/components/HeaderCell.vue')['default']
+    Icon: typeof import('./src/components/ChoIcon/src/Icon.vue')['default']
     Markdown: typeof import('./src/components/Markdown/src/Markdown.vue')['default']
+    PopConfirmButton: typeof import('./src/components/ChoButton/src/PopConfirmButton.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SvgIcon: typeof import('./src/components/ChoIcon/src/SvgIcon.vue')['default']
+    TableAction: typeof import('./src/components/ChoTable/src/components/TableAction.vue')['default']
+    TableImg: typeof import('./src/components/ChoTable/src/components/TableImg.vue')['default']
   }
 }
 

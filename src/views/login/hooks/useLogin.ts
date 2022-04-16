@@ -1,19 +1,24 @@
-import { computed, reactive, Ref, ref, unref } from "vue";
-import { FormRules } from "element-plus";
+import { computed, unref, ref, Ref } from "vue";
+import type { ValidationRule } from "ant-design-vue/lib/form/Form";
 
 export enum LoginStateEnum {
   LOGIN,
+  REGISTER,
+  RESET_PASSWORD,
+  MOBILE,
+  QR_CODE,
 }
 
 const currentState = ref(LoginStateEnum.LOGIN);
 
-export function useFormValid<T extends Object>(formRef: Ref<unknown>) {
+export function useFormValid<T extends Object = any>(formRef: Ref<any>) {
   async function validForm() {
     const form = unref(formRef);
-    if (!form) return;
+    if (!form) {
+      return;
+    }
 
-    const data = await (form as any).validate();
-
+    const data = await form.validate();
     return data as T;
   }
 
@@ -28,7 +33,7 @@ export function useFormRules(_loginInfo?: Recordable) {
     return createRule("请输入密码");
   });
 
-  const getFormRules = computed((): FormRules => {
+  const getFormRules = computed((): { [k: string]: ValidationRule | ValidationRule[] } => {
     const accountFormRule = unref(getAccountFormRule);
     const passwordFormRule = unref(getPasswordFormRule);
 

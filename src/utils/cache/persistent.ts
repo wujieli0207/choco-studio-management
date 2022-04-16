@@ -1,9 +1,9 @@
+import { omit, pick } from "lodash-es";
 import { toRaw } from "vue";
 import { RouteLocationNormalized } from "vue-router";
-
 import { Memory } from "./memory";
 import { ProjectConfig } from "/#/config";
-import { UserInfo, LockInfo } from "/#/store";
+import { LockInfo, UserInfo } from "/#/store";
 import {
   APP_LOCAL_CACHE_KEY,
   APP_SESSION_CACHE_KEY,
@@ -51,11 +51,7 @@ export class Persistent {
     return localMemory.get(key)?.value as Nullable<T>;
   }
 
-  static setLocal(
-    key: LocalKeys,
-    value: LocalStore[LocalKeys],
-    immediate = false
-  ): void {
+  static setLocal(key: LocalKeys, value: LocalStore[LocalKeys], immediate = false): void {
     localMemory.set(key, toRaw(value));
     immediate && ls.set(APP_LOCAL_CACHE_KEY, localMemory.getCache);
   }
@@ -74,11 +70,7 @@ export class Persistent {
     return sessionMemory.get(key)?.value as Nullable<T>;
   }
 
-  static setSession(
-    key: SessionKeys,
-    value: SessionStore[SessionKeys],
-    immediate = false
-  ): void {
+  static setSession(key: SessionKeys, value: SessionStore[SessionKeys], immediate = false): void {
     sessionMemory.set(key, toRaw(value));
     immediate && ss.set(APP_SESSION_CACHE_KEY, sessionMemory.getCache);
   }
@@ -103,6 +95,37 @@ export class Persistent {
   }
 }
 
-// ! TODO 打开多个窗口可能会存在 TOken 不同步问题
+window.addEventListener("beforeunload", function () {
+  // ! TODO TOKEN_KEY 在登录或注销时已经写入到storage了，此处为了解决同时打开多个窗口时token不同步的问题
+  // LOCK_INFO_KEY 在锁屏和解锁时写入，此处也不应修改
+  ls.set(APP_LOCAL_CACHE_KEY, {
+    ...omit(localMemory.getCache, LOCK_INFO_KEY),
+    ...pick(ls.get(APP_LOCAL_CACHE_KEY), [TOKEN_KEY, USER_INFO_KEY, LOCK_INFO_KEY]),
+  });
+  ss.set(APP_SESSION_CACHE_KEY, {
+    ...omit(sessionMemory.getCache, LOCK_INFO_KEY),
+    ...pick(ss.get(APP_SESSION_CACHE_KEY), [TOKEN_KEY, USER_INFO_KEY, LOCK_INFO_KEY]),
+  });
+});
+
+function storageChange(e: any) {
+  const { key, newValue, oldValue } = e;
+
+  if (!key) {
+    Persistent.clearAll();
+    return;
+  }
+
+  if (!!newValue && !!oldValue) {
+    if (APP_LOCAL_CACHE_KEY === key) {
+      Persistent.clearLocal();
+    }
+    if (APP_SESSION_CACHE_KEY === key) {
+      Persistent.clearSession();
+    }
+  }
+}
+
+window.addEventListener("storage", storageChange);
 
 initPersistentMemory();

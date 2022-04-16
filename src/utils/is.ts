@@ -49,12 +49,7 @@ export function isObject(val: any): val is Record<any, any> {
 }
 
 export function isPromise<T = any>(val: unknown): val is Promise<T> {
-  return (
-    is(val, "Promise") &&
-    isObject(val) &&
-    isFunction(val.then) &&
-    isFunction(val.then)
-  );
+  return is(val, "Promise") && isObject(val) && isFunction(val.then) && isFunction(val.then);
 }
 
 export function isWindow(val: any): val is Window {

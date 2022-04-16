@@ -1,17 +1,11 @@
-import { isFunction } from "/@/utils/is";
-import axios, {
-  AxiosError,
-  AxiosInstance,
-  AxiosRequestConfig,
-  AxiosResponse,
-} from "axios";
-import { CreateAxiosOptions } from "./axiosTransform";
-import { ContentTypeEnum, RequestEnum } from "/@/enums/httpEnum";
-import qs from "qs";
-import { AxiosCanceler } from "./axiosCancel";
-import { RequestConfig } from "./types";
-import { RequestOptions, Result } from "/#/axios";
+import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import { cloneDeep } from "lodash-es";
+import qs from "qs";
+import { isFunction } from "/@/utils/is";
+import { AxiosCanceler } from "./axiosCancel";
+import { CreateAxiosOptions } from "./axiosTransform";
+import { RequestOptions, Result } from "/#/axios";
+import { ContentTypeEnum, RequestEnum } from "/@/enums/httpEnum";
 
 export class ChocoAxios {
   private axiosInstance: AxiosInstance;
@@ -50,7 +44,11 @@ export class ChocoAxios {
     Object.assign(this.axiosInstance.defaults.headers, headers);
   }
 
+<<<<<<< HEAD
   supportFormData(config: RequestConfig) {
+=======
+  supportFormData(config: AxiosRequestConfig) {
+>>>>>>> origin2/master
     const headers = config.headers || this.options.headers;
     const contentType = headers?.["Content-Type"] || headers?.["content-type"];
 
@@ -68,6 +66,9 @@ export class ChocoAxios {
     };
   }
 
+  /**
+   * @description 拦截器配置
+   */
   private setupInterceptors() {
     const transform = this.getTransform();
     if (!transform) {
@@ -84,32 +85,25 @@ export class ChocoAxios {
     const axiosCanceler = new AxiosCanceler();
 
     // 请求拦截器
-    this.axiosInstance.interceptors.request.use(
-      (config: AxiosRequestConfig) => {
-        // 如果开启了取消重复请求，则禁止取消重复请求
-        // @ts-ignore
-        const { ignoreCancelToken } = config.requestOptions;
+    this.axiosInstance.interceptors.request.use((config: AxiosRequestConfig) => {
+      // 如果开启了取消重复请求，则禁止取消重复请求
+      // @ts-ignore
+      const { ignoreCancelToken } = config.requestOptions;
+      const ignoreCancel = undefined
+        ? ignoreCancelToken
+        : this.options.requestOptions?.ignoreCancelToken;
 
-        const ignoreCancel = undefined
-          ? ignoreCancelToken
-          : this.options.requestOptions?.ignoreCancelToken;
-
-        !ignoreCancel && axiosCanceler.addPending(config);
-        if (requestInterceptors && isFunction(requestInterceptors)) {
-          config = requestInterceptors(config, this.options);
-        }
-        return config;
-      },
-      undefined
-    );
+      !ignoreCancel && axiosCanceler.addPending(config);
+      if (requestInterceptors && isFunction(requestInterceptors)) {
+        config = requestInterceptors(config, this.options);
+      }
+      return config;
+    }, undefined);
 
     // 捕获请求拦截器异常
     requestInterceptorsCatch &&
       isFunction(requestInterceptorsCatch) &&
-      this.axiosInstance.interceptors.request.use(
-        undefined,
-        requestInterceptorsCatch
-      );
+      this.axiosInstance.interceptors.request.use(undefined, requestInterceptorsCatch);
 
     // 响应拦截器
     this.axiosInstance.interceptors.response.use((res: AxiosResponse<any>) => {
@@ -125,44 +119,26 @@ export class ChocoAxios {
     // 捕获响应拦截异常
     responseInterceptorsCatch &&
       isFunction(responseInterceptorsCatch) &&
-      this.axiosInstance.interceptors.response.use(
-        undefined,
-        responseInterceptors
-      );
+      this.axiosInstance.interceptors.response.use(undefined, responseInterceptors);
   }
 
-  get<T = any>(
-    config: AxiosRequestConfig,
-    options?: RequestOptions
-  ): Promise<T> {
+  get<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
     return this.request({ ...config, method: RequestEnum.GET }, options);
   }
 
-  post<T = any>(
-    config: AxiosRequestConfig,
-    options?: RequestOptions
-  ): Promise<T> {
+  post<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
     return this.request({ ...config, method: RequestEnum.POST }, options);
   }
 
-  put<T = any>(
-    config: AxiosRequestConfig,
-    options?: RequestOptions
-  ): Promise<T> {
+  put<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
     return this.request({ ...config, method: RequestEnum.PUT }, options);
   }
 
-  delete<T = any>(
-    config: AxiosRequestConfig,
-    options?: RequestOptions
-  ): Promise<T> {
+  delete<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
     return this.request({ ...config, method: RequestEnum.DELETE }, options);
   }
 
-  request<T = any>(
-    config: AxiosRequestConfig,
-    options?: RequestOptions
-  ): Promise<T> {
+  request<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
     let conf: CreateAxiosOptions = cloneDeep(config);
     const transform = this.getTransform();
 
@@ -170,8 +146,7 @@ export class ChocoAxios {
 
     const opt: RequestOptions = Object.assign({}, requestOptions, options);
 
-    const { beforeRequestHook, requestCatchHook, transformRequestHook } =
-      transform || {};
+    const { beforeRequestHook, requestCatchHook, transformRequestHook } = transform || {};
     if (beforeRequestHook && isFunction(beforeRequestHook)) {
       conf = beforeRequestHook(conf, opt);
     }

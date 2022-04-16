@@ -1,17 +1,19 @@
 import "/@/styles/index.less";
 import { createApp } from "vue";
 import App from "./App.vue";
-import { setupRouter } from "./router";
-import { setupStore } from "./store";
-import { initAppConfigStore } from "./logics/initAppConfig";
+import setupAntdVue from "/@/plugins/antdVue";
+import { setupRouter } from "/@/router";
+import { setupStore } from "/@/store";
+import setupAntdVueIcon from "/@/plugins/anddVueIcon";
 
 function bootstrap() {
   const app = createApp(App);
+
   setupRouter(app);
   setupStore(app);
 
-  // 初始化项目配置
-  initAppConfigStore();
+  setupAntdVue(app);
+  setupAntdVueIcon(app);
 
   app.mount("#app");
 }

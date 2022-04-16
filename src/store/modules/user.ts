@@ -1,13 +1,16 @@
-import { loginApi, getUserInfoApi } from "/@/api/user";
 import { defineStore } from "pinia";
+import { h } from "vue";
+import { store } from "/@/store";
 import { ErrorMessageMode } from "/#/axios";
 import { UserInfo } from "/#/store";
 import { GetUserInfoModel, LoginParams } from "/@/api/model/userModel";
+import { loginApi, getUserInfo } from "/@/api/user";
 import { ROLES_KEY, TOKEN_KEY, USER_INFO_KEY } from "/@/enums/cacheEnum";
 import { RoleEnum } from "/@/enums/roleEnum";
-import { store } from "/@/store";
+import { useMessage } from "/@/hooks/useMessage";
 import { getAuthCache, setAuthCache } from "/@/utils/auth";
 import { router } from "/@/router";
+import { PageEnum } from "/@/enums/pageEnum";
 
 interface UserState {
   userInfo: Nullable<UserInfo>;
@@ -34,9 +37,7 @@ export const useUserStore = defineStore({
       return this.token || getAuthCache<string>(TOKEN_KEY);
     },
     getRoleList(): RoleEnum[] {
-      return this.roleList.length > 0
-        ? this.roleList
-        : getAuthCache<RoleEnum[]>(ROLES_KEY);
+      return this.roleList.length > 0 ? this.roleList : getAuthCache<RoleEnum[]>(ROLES_KEY);
     },
     getSessionTimeout(): boolean {
       return !!this.sessionTimeout;
@@ -68,14 +69,17 @@ export const useUserStore = defineStore({
       this.sessionTimeout = false;
     },
     async login(
-      params: LoginParams & { _goHome?: boolean; mode?: ErrorMessageMode }
-    ) {
+      params: LoginParams & {
+        _goHome?: boolean;
+        mode?: ErrorMessageMode;
+      }
+    ): Promise<GetUserInfoModel | null> {
       try {
-        console.log("params: ", params);
         const { _goHome = true, mode, ...loginParams } = params;
-        const data = await loginApi(loginParams, mode);
 
+        const data = await loginApi(loginParams, mode);
         const { token } = data;
+
         this.setToken(token);
 
         return this.afterLoginAction();
@@ -83,16 +87,14 @@ export const useUserStore = defineStore({
         return Promise.reject(error);
       }
     },
-    async afterLoginAction(
-      _goHome?: boolean
-    ): Promise<GetUserInfoModel | null> {
-      if (!this.token) return null;
+    async afterLoginAction(_goHome?: boolean): Promise<GetUserInfoModel | null> {
+      if (!this.getToken) {
+        return null;
+      }
 
       const userInfo = await this.getUserInfoAction();
 
       const sessiontTimeout = this.sessionTimeout;
-      console.log("sessiontTimeout: ", sessiontTimeout);
-
       if (sessiontTimeout) {
         this.setSessionTimeout(false);
       } else {
@@ -105,9 +107,11 @@ export const useUserStore = defineStore({
       return userInfo;
     },
     async getUserInfoAction(): Promise<UserInfo | null> {
-      if (!this.token) return null;
+      if (!this.getToken) {
+        return null;
+      }
 
-      const userInfo = await getUserInfoApi();
+      const userInfo = await getUserInfo();
 
       const { roles = [] } = userInfo;
       if (Array.isArray(roles)) {
@@ -122,7 +126,30 @@ export const useUserStore = defineStore({
 
       return userInfo;
     },
-    async logout(goLogin = false) {},
+    async logout(goLogin = false) {
+      if (this.getToken) {
+        try {
+          // TODO 登出方法待实现
+        } catch (error) {
+          console.log(error, "注销 TOKEN 失败");
+        }
+        this.setToken(undefined);
+        this.setSessionTimeout(false);
+        this.setUserInfo(null);
+        goLogin && router.push(PageEnum.BASE_LOGIN);
+      }
+    },
+    confirmLoginOut() {
+      const { createConfirm } = useMessage();
+      createConfirm({
+        iconType: "warning",
+        title: () => h("span", "温馨提示"),
+        content: () => h("span", "是否确认退出系统？"),
+        onOk: async () => {
+          await this.logout(true);
+        },
+      });
+    },
   },
 });
 

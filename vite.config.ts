@@ -1,10 +1,10 @@
-import { ConfigEnv, defineConfig, UserConfigExport } from "vite";
+import { ConfigEnv, UserConfigExport } from "vite";
 import vue from "@vitejs/plugin-vue";
 import { resolve } from "path";
-import AutoImport from "unplugin-auto-import/vite";
-import Components from "unplugin-vue-components/vite";
-import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
+import { createStyleImportPlugin, AndDesignVueResolve } from "vite-plugin-style-import";
+import PurgeIcons from "vite-plugin-purge-icons";
 import { viteMockServe } from "vite-plugin-mock";
+import vueJsx from "@vitejs/plugin-vue-jsx";
 
 const pathResolve = (dir: string): any => {
   return resolve(__dirname, ".", dir);
@@ -19,17 +19,20 @@ export default ({ command }: ConfigEnv): UserConfigExport => {
   return {
     plugins: [
       vue(),
-      AutoImport({
-        resolvers: [ElementPlusResolver()],
+      vueJsx(),
+      createStyleImportPlugin({
+        resolves: [AndDesignVueResolve()],
       }),
-      Components({
-        resolvers: [ElementPlusResolver()],
-      }),
+      PurgeIcons(),
       viteMockServe({
         mockPath: "mock", // mock 文件目录，默认为根目录的 mock 目录
         localEnabled: command === "serve",
       }),
     ],
+    // 别名设置
+    resolve: {
+      alias,
+    },
     // 服务设置
     server: {
       host: true, // host设置为true才可以使用network的形式，以ip访问项目
@@ -49,8 +52,12 @@ export default ({ command }: ConfigEnv): UserConfigExport => {
         },
       },
     },
-    resolve: {
-      alias,
+    css: {
+      preprocessorOptions: {
+        less: {
+          javascriptEnabled: true,
+        },
+      },
     },
   };
 };

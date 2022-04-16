@@ -8,7 +8,6 @@
     "jsx": "preserve",
     "sourceMap": true,
     "resolveJsonModule": true,
-    "isolatedModules": true,
     "esModuleInterop": true,
     "lib": ["esnext", "dom"],
     "baseUrl": ".",
@@ -16,7 +15,6 @@
       "/@/*": ["src/*"],
       "/#/*": ["types/*"]
     },
-    "types": ["element-plus/global"],
     "skipLibCheck": true
   },
   "include": [

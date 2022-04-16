@@ -7,10 +7,7 @@ export interface requestParams {
   query: any;
 }
 
-export function resultSuccess<T = Recordable>(
-  result: T,
-  { message = "请求成功" } = {}
-) {
+export function resultSuccess<T = Recordable>(result: T, { message = "请求成功" } = {}) {
   return {
     code: ResultEnum.SUCCESS,
     result,
@@ -19,10 +16,7 @@ export function resultSuccess<T = Recordable>(
   };
 }
 
-export function resultError(
-  message = "请求失败",
-  { code = ResultEnum.ERROR, result = null } = {}
-) {
+export function resultError(message = "请求失败", { code = ResultEnum.ERROR, result = null } = {}) {
   return {
     code,
     result,
@@ -31,8 +25,6 @@ export function resultError(
   };
 }
 
-export function getRequestToken({
-  headers,
-}: requestParams): string | undefined {
+export function getRequestToken({ headers }: requestParams): string | undefined {
   return headers?.authorization;
 }

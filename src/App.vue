@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <script setup lang="ts"></script>
 
 <template>
@@ -5,3 +6,8 @@
 </template>
 
 <style></style>
+=======
+<template>
+  <router-view />
+</template>
+>>>>>>> origin2/master

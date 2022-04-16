@@ -1,4 +1,4 @@
-export interface Cache<V = unknown> {
+export interface Cache<V = any> {
   value?: V;
   timeoutId?: ReturnType<typeof setTimeout>;
   time?: number;
@@ -7,7 +7,7 @@ export interface Cache<V = unknown> {
 
 const NOT_ALIVE = 0;
 
-export class Memory<T = unknown, V = unknown> {
+export class Memory<T = any, V = any> {
   private cache: { [key in keyof T]?: Cache<V> } = {};
   private alive: number;
 
@@ -19,7 +19,7 @@ export class Memory<T = unknown, V = unknown> {
     return this.cache;
   }
 
-  set setCache(cache: { [key in keyof T]?: Cache<V> }) {
+  setCache(cache: { [key in keyof T]?: Cache<V> }) {
     this.cache = cache;
   }
 
@@ -70,28 +70,28 @@ export class Memory<T = unknown, V = unknown> {
     }
   }
 
+  resetCache(cache: { [K in keyof T]: Cache }) {
+    Object.keys(cache).forEach((key) => {
+      const k = key as unknown as keyof T;
+      const item = cache[k];
+      if (item && item.time) {
+        const now = new Date().getTime();
+        const expire = item.time;
+        if (expire > now) {
+          this.set(k, item.value, expire);
+        }
+      }
+    });
+  }
+
   clear() {
-    Object.keys(this.cache).forEach((key: unknown) => {
-      const k = key as keyof T;
+    Object.keys(this.cache).forEach((key: any) => {
+      const k = key as unknown as keyof T;
       const item = this.cache[k];
       if (item?.timeoutId) {
         item.timeoutId && clearTimeout(item.timeoutId);
       }
     });
     this.cache = {};
-  }
-
-  resetCache(cache: { [K in keyof T]: Cache }) {
-    Object.keys(cache).forEach((key) => {
-      const k = key as keyof T;
-      const item = cache[k];
-      if (item && item.time) {
-        const now = new Date().getTime();
-        const expire = item.time;
-        if (expire > now) {
-          this.set(k, item.value as V, expire);
-        }
-      }
-    });
   }
 }

@@ -10,10 +10,7 @@ export function formatToDateTime(
   return dayjs(date).format(format);
 }
 
-export function formatToDate(
-  date: Date | undefined = undefined,
-  format = DATE_FORMAT
-): string {
+export function formatToDate(date: Date | undefined = undefined, format = DATE_FORMAT): string {
   return dayjs(date).format(format);
 }
 

@@ -1,9 +1,11 @@
 import { ErrorMessageMode } from "/#/axios";
 import { SessionTimeoutProcessingEnum } from "/@/enums/appEnum";
+import { useMessage } from "/@/hooks/useMessage";
 import projectSetting from "/@/settings/projectSetting";
 import { useUserStoreWithOut } from "/@/store/modules/user";
 
 const stp = projectSetting.sessionTimeoutProcessing;
+const { createMessage, createErrorModal } = useMessage();
 
 export function checkStatus(
   status: number,
@@ -63,15 +65,11 @@ export function checkStatus(
   }
 
   if (errMessage) {
-    // TODO 弹窗提示
-    // if (errorMessageMode === "modal") {
-    //   createErrorModal({ title: "错误提示", content: errMessage });
-    // }
-    // if (errorMessageMode === "message") {
-    //   createMessage.error({
-    //     content: errMessage,
-    //     key: `请求错误状态${status}`,
-    //   });
-    // }
+    if (errorMessageMode === "modal") {
+      createErrorModal({ title: "错误提示", content: errMessage });
+    }
+    if (errorMessageMode === "message") {
+      createMessage.error({ content: errMessage, key: `请求错误状态${status}` });
+    }
   }
 }

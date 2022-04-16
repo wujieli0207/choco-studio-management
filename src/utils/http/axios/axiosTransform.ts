@@ -1,5 +1,5 @@
-import { AxiosRequestConfig, AxiosResponse } from "axios";
-import { RequestOptions, Result } from "/#/axios";
+import type { AxiosRequestConfig, AxiosResponse } from "axios";
+import type { RequestOptions, Result } from "/#/axios";
 
 export interface CreateAxiosOptions extends AxiosRequestConfig {
   authenticationScheme?: string;
@@ -8,18 +8,12 @@ export interface CreateAxiosOptions extends AxiosRequestConfig {
 }
 
 export abstract class AxiosTransform {
-  beforeRequestHook?: (
-    config: AxiosRequestConfig,
-    options: RequestOptions
-  ) => AxiosRequestConfig;
+  beforeRequestHook?: (config: AxiosRequestConfig, options: RequestOptions) => AxiosRequestConfig;
 
   /**
    * @description 请求成功处理
    */
-  transformRequestHook?: (
-    res: AxiosResponse<Result>,
-    options: RequestOptions
-  ) => any;
+  transformRequestHook?: (res: AxiosResponse<Result>, options: RequestOptions) => any;
 
   /**
    * @description 请求失败处理
