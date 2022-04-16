@@ -12,7 +12,7 @@ export const LoginRoute: RouteRecordRaw = {
 export const HomeRoute: RouteRecordRaw = {
   path: "/layout",
   name: "layout",
-  component: () => import("/@/layouts/default/index.vue"),
+  component: () => import("../../layouts/index.vue"),
   meta: {
     title: "主页",
   },
