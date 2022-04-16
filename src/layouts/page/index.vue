@@ -1,5 +1,4 @@
 <template>
-  123
   <router-view>
     <template #default="{ Component }">
       <transition>

@@ -20,10 +20,10 @@
         <el-icon><picture-filled /></el-icon>
         课程管理
       </template>
-      <el-menu-item>
+      <el-menu-item index="/courseManage">
         <template #title> 课程内容管理 </template>
       </el-menu-item>
-      <el-menu-item>
+      <el-menu-item index="/courseView">
         <template #title> 课程视图查看 </template>
       </el-menu-item>
     </el-sub-menu>
@@ -32,10 +32,10 @@
         <el-icon><platform /></el-icon>
         文章模块
       </template>
-      <el-menu-item>
+      <el-menu-item index="/articleManage">
         <template #title> 文章管理 </template>
       </el-menu-item>
-      <el-menu-item>
+      <el-menu-item index="/articleEdit">
         <template #title> 文章编辑 </template>
       </el-menu-item>
     </el-sub-menu>
@@ -44,13 +44,13 @@
         <el-icon><avatar /></el-icon>
         系统管理
       </template>
-      <el-menu-item>
+      <el-menu-item index="account">
         <template #title> 用户管理 </template>
       </el-menu-item>
-      <el-menu-item>
+      <el-menu-item index="role">
         <template #title> 权限管理 </template>
       </el-menu-item>
-      <el-menu-item>
+      <el-menu-item index="menu">
         <template #title> 菜单管理 </template>
       </el-menu-item>
     </el-sub-menu>

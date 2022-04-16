@@ -8,7 +8,7 @@
       <el-main>
         <cho-content />
       </el-main>
-      <el-footer>Footer</el-footer>
+      <el-footer></el-footer>
     </el-container>
   </el-container>
 </template>
