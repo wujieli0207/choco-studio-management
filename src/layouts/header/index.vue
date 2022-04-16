@@ -1,10 +1,12 @@
 <template>
   <div class="flex items-center justify-between h-12 bg-slate-900">
-    <div class="flex flex-row ml-4">
-      <el-button type="primary">
-        <el-icon><d-arrow-left /></el-icon>
-        <el-icon><d-arrow-right /></el-icon>
-      </el-button>
+    <div class="flex flex-row ml-4" @click.stop="toggleCollapsed">
+      <el-icon v-if="getCollapsed">
+        <fold v-if="getCollapsed" class="text-white rotate-180" />
+      </el-icon>
+      <el-icon v-else>
+        <fold class="text-white" />
+      </el-icon>
     </div>
     <!-- 右侧下拉菜单 -->
     <div class="mr-12">
@@ -33,8 +35,10 @@
 </template>
 
 <script lang="ts" setup>
-import { DArrowLeft, DArrowRight } from "@element-plus/icons-vue";
+import { Fold } from "@element-plus/icons-vue";
+// TODO 头像链接暂时写死
 import avatar from "/@/assets/image/avatar.jpg";
+import { useMenuSetting } from "/@/hooks/setting/useMenuSetting";
 
-const title = import.meta.env.VITE_GLOB_APP_TITLE;
+const { getCollapsed, toggleCollapsed } = useMenuSetting();
 </script>

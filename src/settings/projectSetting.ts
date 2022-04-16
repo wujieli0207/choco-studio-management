@@ -7,6 +7,9 @@ const projectSetting: ProjectConfig = {
   permissionCacheType: CacheTypeEnum.LOCAL,
   useErrorHandle: false,
   sessionTimeoutProcessing: SessionTimeoutProcessingEnum.PROUTE_JUMP,
+  menuSetting: {
+    collapsed: false, // 侧边栏默认不折叠
+  },
 };
 
 export default projectSetting;

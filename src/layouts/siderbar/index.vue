@@ -5,20 +5,20 @@
     class="h-12 text-xl font-semibold text-center text-white bg-slate-900"
     style="line-height: 3rem"
   >
-    {{ title }}
+    <div v-if="!getCollapsed">{{ title }}</div>
   </div>
   <!-- TODO 侧边栏暂时不是动态生成的 -->
-  <el-menu class="h-screen" :router="true">
+  <el-menu class="h-screen" :router="true" :collapse="getCollapsed">
     <el-menu-item index="/home">
+      <el-icon><home-filled /></el-icon>
       <template #title>
-        <el-icon><home-filled /></el-icon>
-        首页
+        <span>首页</span>
       </template>
     </el-menu-item>
-    <el-sub-menu index="1">
+    <el-sub-menu index="2">
       <template #title>
         <el-icon><picture-filled /></el-icon>
-        课程管理
+        <span>课程管理</span>
       </template>
       <el-menu-item index="/courseManage">
         <template #title> 课程内容管理 </template>
@@ -27,10 +27,10 @@
         <template #title> 课程视图查看 </template>
       </el-menu-item>
     </el-sub-menu>
-    <el-sub-menu index="2">
+    <el-sub-menu index="3">
       <template #title>
         <el-icon><platform /></el-icon>
-        文章模块
+        <span>文章模块</span>
       </template>
       <el-menu-item index="/articleManage">
         <template #title> 文章管理 </template>
@@ -39,10 +39,10 @@
         <template #title> 文章编辑 </template>
       </el-menu-item>
     </el-sub-menu>
-    <el-sub-menu index="3">
+    <el-sub-menu index="4">
       <template #title>
         <el-icon><avatar /></el-icon>
-        系统管理
+        <span>系统管理</span>
       </template>
       <el-menu-item index="account">
         <template #title> 用户管理 </template>
@@ -64,6 +64,9 @@ import {
   Platform,
   PictureFilled,
 } from "@element-plus/icons-vue";
+import { useMenuSetting } from "/@/hooks/setting/useMenuSetting";
+
+const { getCollapsed } = useMenuSetting();
 
 const title = import.meta.env.VITE_GLOB_APP_TITLE;
 </script>
