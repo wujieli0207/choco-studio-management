@@ -1,6 +1,14 @@
 <template>
-  <!-- TODO 侧边栏不是动态生成的 -->
-  <el-menu :router="true">
+  <!-- 管理后台名称 -->
+  <!-- TODO tailwind leading-12 无效 -->
+  <div
+    class="h-12 text-xl font-semibold text-center text-white bg-slate-900"
+    style="line-height: 3rem"
+  >
+    {{ title }}
+  </div>
+  <!-- TODO 侧边栏暂时不是动态生成的 -->
+  <el-menu class="h-screen" :router="true">
     <el-menu-item index="/home">
       <template #title>
         <el-icon><home-filled /></el-icon>
@@ -56,4 +64,6 @@ import {
   Platform,
   PictureFilled,
 } from "@element-plus/icons-vue";
+
+const title = import.meta.env.VITE_GLOB_APP_TITLE;
 </script>

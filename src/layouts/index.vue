@@ -1,5 +1,5 @@
 <template>
-  <el-container>
+  <el-container class="w-screen h-screen">
     <el-aside width="200px">
       <cho-sidebar />
     </el-aside>
