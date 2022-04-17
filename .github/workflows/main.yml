@@ -1,10 +1,9 @@
 name: build and deploy
 
 # master 分支 push 代码时触发 workflow
-on:
-  push:
-    branches:
-      - master
+push:
+  branches:
+    - master
 
 jobs:
   main:
