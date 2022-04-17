@@ -23,8 +23,7 @@
             <el-dropdown-item>
               <a href="javascript:;">个人中心</a>
             </el-dropdown-item>
-            <el-divider style="margin: 0" />
-            <el-dropdown-item>
+            <el-dropdown-item divided>
               <a href="javascript:;">退出登录</a>
             </el-dropdown-item>
           </el-dropdown-menu>
