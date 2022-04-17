@@ -36,6 +36,7 @@ import { reactive, ref } from "vue";
 import { useFormRules, useFormValid } from "./hooks/useLogin";
 // // import { useMessage } from "/@/hooks/useMessage";
 import { useUserStore } from "/@/store/modules/user";
+import { getAppEnvConfig } from "/@/utils/env";
 
 const userStore = useUserStore();
 // const { notification, createErrorModal } = useMessage();
@@ -44,7 +45,8 @@ const { getFormRules } = useFormRules();
 const formRef = ref();
 const loading = ref(false);
 
-const title = import.meta.env.VITE_GLOB_APP_TITLE;
+const { VITE_GLOB_APP_TITLE: title } = getAppEnvConfig();
+
 const loginInfo = reactive({
   userName: "wujieli",
   password: "123456",

@@ -70,8 +70,9 @@ import {
   PictureFilled,
 } from "@element-plus/icons-vue";
 import { useMenuSetting } from "/@/hooks/setting/useMenuSetting";
+import { getAppEnvConfig } from "/@/utils/env";
 
 const { getCollapsed } = useMenuSetting();
 
-const title = import.meta.env.VITE_GLOB_APP_TITLE;
+const { VITE_GLOB_APP_TITLE: title } = getAppEnvConfig();
 </script>

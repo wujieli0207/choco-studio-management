@@ -4,8 +4,9 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
-    "preview": "vite preview"
+    "build": "cross-env NODE_ENV=production vue-tsc --noEmit && vite build",
+    "preview": "pnpm run build && vite preview",
+    "preview:dist": "vite preview"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^1.1.4",
@@ -26,6 +27,7 @@
     "@types/node": "^17.0.23",
     "@vitejs/plugin-vue": "^2.3.0",
     "autoprefixer": "^10.4.4",
+    "cross-env": "^7.0.3",
     "less": "^4.1.2",
     "mockjs": "^1.1.0",
     "postcss": "^8.4.12",
