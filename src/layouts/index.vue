@@ -4,7 +4,9 @@
       <cho-sidebar />
     </el-aside>
     <el-container>
-      <cho-header />
+      <el-header>
+        <cho-header />
+      </el-header>
       <el-main>
         <cho-content />
       </el-main>
