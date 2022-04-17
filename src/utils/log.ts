@@ -1,11 +1,9 @@
-import { getAppEnvConfig } from "./env";
-
-const { VITE_GLOB_APP_TITLE: porjectName } = getAppEnvConfig();
+const projectName = import.meta.env.VITE_GLOB_APP_TITLE;
 
 export function warn(message: string) {
-  console.warn(`[${porjectName} warn]:${message}`);
+  console.warn(`[${projectName} warn]:${message}`);
 }
 
 export function error(message: string) {
-  throw new Error(`[${porjectName} error]:${message}`);
+  throw new Error(`[${projectName} error]:${message}`);
 }

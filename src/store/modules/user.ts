@@ -71,7 +71,6 @@ export const useUserStore = defineStore({
       params: LoginParams & { _goHome?: boolean; mode?: ErrorMessageMode }
     ) {
       try {
-        console.log("params: ", params);
         const { _goHome = true, mode, ...loginParams } = params;
         const data = await loginApi(loginParams, mode);
 

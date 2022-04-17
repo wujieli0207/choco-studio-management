@@ -167,6 +167,7 @@ export class ChocoAxios {
     const transform = this.getTransform();
 
     const { requestOptions } = this.options;
+    console.log("requestOptions: ", requestOptions);
 
     const opt: RequestOptions = Object.assign({}, requestOptions, options);
 

@@ -17,7 +17,6 @@ const alias: Record<string, string> = {
 
 export default ({ command }: ConfigEnv): UserConfigExport => {
   return {
-    base: "/choco-studio-management/",
     plugins: [
       vue(),
       AutoImport({
@@ -29,7 +28,6 @@ export default ({ command }: ConfigEnv): UserConfigExport => {
       viteMockServe({
         mockPath: "mock", // mock 文件目录，默认为根目录的 mock 目录
         localEnabled: command === "serve",
-        prodEnabled: command === "build",
       }),
     ],
     // 服务设置
