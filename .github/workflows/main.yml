@@ -7,7 +7,7 @@ on:
       - master
 
 jobs:
-  build-deploy:
+  push-to-gh-pages:
     runs-on: ubuntu-latest
     setps:
       - name: Checkout
@@ -21,7 +21,9 @@ jobs:
       # 执行部署
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v2.5.0
-        with:
+        env:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }} # 指定密钥
-          BRANCH: gh-pages ##指定推送到的远程分支
-          FOLDER: /dist # 指定构建之后要推送哪个目录的代码
+          PUBLISH_BRANCH: gh-pages
+          PUBLISH_DIR: ./dist
+        with:
+          forceOrphan: true
