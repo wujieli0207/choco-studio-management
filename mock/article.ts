@@ -1,10 +1,5 @@
 import { MockMethod } from "vite-plugin-mock";
-import {
-  getRequestToken,
-  requestParams,
-  resultError,
-  resultSuccess,
-} from "./_util";
+import { requestParams, resultSuccess } from "./_util";
 import { ArticleList } from "/@/api/model/articleModel";
 import { Random } from "mockjs";
 
@@ -20,6 +15,7 @@ for (let i = 0; i < MOCK_LIST_NUM; i++) {
     createTime: Random.datetime("yyyy-MM-dd HH:mm:ss"),
     catagory: [Random.cword(3)],
     tag: [Random.cword(5), Random.cword(3)],
+    status: Random.integer(0, 3),
   };
   mockArticleList.push(article);
 }
