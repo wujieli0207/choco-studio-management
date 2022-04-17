@@ -17,6 +17,7 @@ const alias: Record<string, string> = {
 
 export default ({ command }: ConfigEnv): UserConfigExport => {
   return {
+    base: "/choco-studio-management/",
     plugins: [
       vue(),
       AutoImport({
