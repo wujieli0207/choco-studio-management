@@ -1,4 +1,6 @@
-const porjectName = import.meta.env.VITE_GLOB_APP_TITLE;
+import { getAppEnvConfig } from "./env";
+
+const { VITE_GLOB_APP_TITLE: porjectName } = getAppEnvConfig();
 
 export function warn(message: string) {
   console.warn(`[${porjectName} warn]:${message}`);

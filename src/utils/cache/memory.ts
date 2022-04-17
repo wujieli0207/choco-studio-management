@@ -1,4 +1,4 @@
-export interface Cache<V = unknown> {
+export interface Cache<V = any> {
   value?: V;
   timeoutId?: ReturnType<typeof setTimeout>;
   time?: number;
@@ -7,7 +7,7 @@ export interface Cache<V = unknown> {
 
 const NOT_ALIVE = 0;
 
-export class Memory<T = unknown, V = unknown> {
+export class Memory<T = any, V = any> {
   private cache: { [key in keyof T]?: Cache<V> } = {};
   private alive: number;
 
